@@ -24,9 +24,11 @@ def read_list():
             with (Image.open(file_path)) as img:
                 width, height = img.size
 
+            git_file_path = os.path.join("sto-home-objectDect/images", name+'.jpg')
+
             for obj_type, obj_positions in objects.items():
                 for obj_loc in obj_positions:
-                    data_list.append([file_path, width, height, obj_type, obj_loc[0][0], obj_loc[0][1], obj_loc[1][0], obj_loc[1][1]])
+                    data_list.append([git_file_path, width, height, obj_type, obj_loc[0][0], obj_loc[0][1], obj_loc[1][0], obj_loc[1][1]])
 
     return data_list
 
