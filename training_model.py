@@ -48,7 +48,7 @@ def make_obj_det_csv():
     for i, row in enumerate(read_list()):
         filename, width, height, class_type, xmin, ymin, xmax, ymax = row
         csv_list.append("{},{},{},{},{},,,{},{},,".format(
-            training_class(i), class_type, filename, str(int(xmin)/width), str(int(ymin)/height), str(int(xmax)/width), str(int(ymax)/height)
+            training_class(i), filename, class_type, str(int(xmin)/width), str(int(ymin)/height), str(int(xmax)/width), str(int(ymax)/height)
         ))
 
     return '\n'.join(csv_list)
