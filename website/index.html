@@ -1,0 +1,57 @@
+<head>
+    <style>
+
+        .btn {
+            border: 1px solid #888;
+            cursor: pointer;
+            width: 100px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        .btn:hover {
+            background-color: #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="./house.jpg" crossorigin="anonymous" />
+    <div class="btn">Detect</div>
+    <div class="result"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-tflite/dist/tf-tflite.min.js"></script>
+
+    <script>
+        // import * as tflite from "tflite";
+        
+        console.log("my script is running");
+
+        let objectDetector;
+
+        async function detect() {
+            if (!objectDetector) {
+                objectDetector = await tflite.ObjectDetector.create(
+                    "./model.tflite",
+                    { maxResults: 10 }
+                );
+            }
+            const start = Date.now();
+            const result = objectDetector.detect(document.querySelector("img"));
+            for (const obj of result) {
+                const boundingBox = obj.boundingBox;
+                const clazz = obj.classes[0];
+                const strResult = `[${boundingBox.originX}, ${boundingBox.originY
+                    }, ${boundingBox.width}, ${boundingBox.height}]`;
+                document.querySelector(".result").textContent = (document.querySelector(".result").textContent ?? "") + strResult + ",";
+            }
+            
+        }
+
+        document.querySelector(".btn").addEventListener("click", () => {
+            detect();
+        });
+    </script>
+</body>
